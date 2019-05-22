@@ -111,7 +111,7 @@ public class Main {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HHÊ±" + "mm·Ö");
 		Date date = new Date();
 		String timeString = format.format(date);
-		File outFileParentFile = new File("E:" + File.separator + "match" + File.separator + "numberout");
+		File outFileParentFile = new File("E:" + File.separator + "match" + File.separator + "nameout");
 		if (!outFileParentFile.exists()) {
 			outFileParentFile.mkdir();
 		}
