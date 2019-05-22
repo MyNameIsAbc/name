@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="E:/jxl-2.6.12.jar"/>
+	<classpathentry kind="lib" path="jxl-2.6.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
