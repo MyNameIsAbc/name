@@ -36,7 +36,7 @@ public class Main {
 	static int date = c.get(Calendar.DATE);
 	private static ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 	static File outFileParentFile2 = null;
-
+    public static String rubbishPath="E:" + File.separator + "match" + File.separator + "offical"+File.separator+"rubbish";
 	public static void main(String[] args) {
 		logfile = new File("E:" + File.separator + "match" + File.separator + "time.txt");
 		if (!logfile.exists()) {
@@ -50,7 +50,7 @@ public class Main {
 		CopyOnWriteArrayList<File> nameFiles = new CopyOnWriteArrayList<File>();
 		Utils.getFileList(nameFiles, "E:" + File.separator + "match" + File.separator + "name");
 		CopyOnWriteArrayList<File> officalFiles = new CopyOnWriteArrayList<File>();
-		Utils.getFileList(officalFiles, "E:" + File.separator + "match" + File.separator + "offical");
+		Utils.getFileList(officalFiles, "E:" + File.separator + "match" + File.separator + "offical",rubbishPath);
 
 		if (nameFiles.isEmpty()) {
 			Utils.print("不存在name表！........退出", logfile);
@@ -440,7 +440,7 @@ public class Main {
 	}
 
 	private static void outFile(File file, File outfile, List<Result> results) {
-		File fresultfile1 = new File(outfile, file.getName().replaceAll(".xls", "") + "out1.xls");
+		File fresultfile1 = new File(outfile, file.getName().replaceAll(".xls", "") + "out.xls");
 		if (!fresultfile1.exists()) {
 			try {
 				fresultfile1.createNewFile();
@@ -452,7 +452,7 @@ public class Main {
 		a = new Date();
 		int number = results.size();
 		if (number > 0) {
-			if (number > 3) {
+			if (number > 1000) {
 				int plus = 0;
 				if (number % 3 > 0) {
 					plus = (number - number % 3) / 3;

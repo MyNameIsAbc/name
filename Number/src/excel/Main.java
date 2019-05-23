@@ -35,6 +35,7 @@ public class Main {
 	static int date = c.get(Calendar.DATE);
 	private static ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 	static File outFileParentFile2 = null;
+	 public static String rubbishPath="E:" + File.separator + "match" + File.separator + "offical"+File.separator+"rubbish";
 	public static void main(String[] args) {
 		logfile = new File("E:" + File.separator + "match" + File.separator + "time2.txt");
 		if (!logfile.exists()) {
@@ -57,7 +58,7 @@ public class Main {
 					Utils.print("录入nameCode表" + numberfile.getName() + "数据完毕！共有" + modelNames.size() + "个数据", logfile);
 				}
 				CopyOnWriteArrayList<File> officalFiles=new CopyOnWriteArrayList<>();
-				Utils.getFileList(officalFiles,"E:" + File.separator + "match" + File.separator + "offical");
+				Utils.getFileList(officalFiles,"E:" + File.separator + "match" + File.separator + "offical",rubbishPath);
 				initFile();
 				for (File file : officalFiles) {
 					List<Result> results = new ArrayList<>();
@@ -451,7 +452,7 @@ public class Main {
 		a = new Date();
 		int number = results.size();
 		if (number > 0) {
-			if (number > 3) {
+			if (number > 1000) {
 				int plus = 0;
 				if (number % 3 > 0) {
 					plus = (number - number % 3) / 3;
