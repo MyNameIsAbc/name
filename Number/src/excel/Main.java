@@ -46,15 +46,15 @@ public class Main {
 			}
 		}
 		CopyOnWriteArrayList<File> numberFiles=new CopyOnWriteArrayList<>();
-		Utils.getFileList(numberFiles,"E:" + File.separator + "match" + File.separator + "number");
+		Utils.getFileList(numberFiles,"E:" + File.separator + "match" + File.separator + "nameCode");
 		if (numberFiles.isEmpty()) {
-			Utils.print("不存在number表！........退出", logfile);
+			Utils.print("不存在nameCode表！........退出", logfile);
 		} else {
 			for (File numberfile : numberFiles) {
-				Utils.print("开始录入number表的数据！", logfile);
+				Utils.print("开始录入nameCode表的数据！", logfile);
 				List<ModelName> modelNames = startFindname(numberfile);
 				if (!modelNames.isEmpty()) {
-					Utils.print("录入name表" + numberfile.getName() + "数据完毕！共有" + modelNames.size() + "个数据", logfile);
+					Utils.print("录入nameCode表" + numberfile.getName() + "数据完毕！共有" + modelNames.size() + "个数据", logfile);
 				}
 				CopyOnWriteArrayList<File> officalFiles=new CopyOnWriteArrayList<>();
 				Utils.getFileList(officalFiles,"E:" + File.separator + "match" + File.separator + "offical");
@@ -72,7 +72,8 @@ public class Main {
 							if (modelName.getExamcode().isEmpty()) {
 								continue;
 							}
-							if (modelName.getExamcode().equalsIgnoreCase(modelOffical.getExamcode())) {
+							if (modelName.getExamcode().equalsIgnoreCase(modelOffical.getFinjobcode())&&
+									modelName.getName().equalsIgnoreCase(modelOffical.getName())) {
 								extractResult(results, modelOffical, modelName);
 							}
 						}
@@ -136,7 +137,7 @@ public class Main {
 						phone = i;
 					}
 					phonecount++;
-				} else if (columnname.contains("准考证号")) {
+				} else if (columnname.contains("职位代码")) {
 					if (examconut == 0) {
 						excamcode = i;
 					}
@@ -146,12 +147,15 @@ public class Main {
 					break;
 				}
 			}
-			if (name != -1 && phone != -1) {
+			if (name != -1 && excamcode != -1) {
 				break;
 			}
 		}
+		System.out.println("row:"+row);
+//		System.out.println("--------------name:"+sheet.getCell(name, 3038).getContents());
 		if (row != -1) {
 			for (int i = row + 1; i < sheet.getRows(); i++) {
+//				System.out.println("--------------i:"+i+"name:"+name);
 				ModelName modelName = new ModelName();
 				if (name != -1) {
 					modelName.setName(sheet.getCell(name, i).getContents());
@@ -162,8 +166,14 @@ public class Main {
 				if (excamcode != -1) {
 					modelName.setExamcode(sheet.getCell(excamcode, i).getContents());
 				}
-				modelNames.add(modelName);
+				if (modelName.getExamcode().isEmpty()||modelName.getName().isEmpty()) {
+					
+				}else {
+					modelNames.add(modelName);
+				}
+				
 			}
+			System.out.println("modelname size:"+modelNames.size());
 		}
 		return modelNames;
 
@@ -173,7 +183,7 @@ public class Main {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH时" + "mm分");
 		Date date = new Date();
 		String timeString = format.format(date);
-		File outFileParentFile = new File("E:" + File.separator + "match" + File.separator + "numberout");
+		File outFileParentFile = new File("E:" + File.separator + "match" + File.separator + "nameCodeout");
 		if (!outFileParentFile.exists()) {
 			outFileParentFile.mkdir();
 		}
